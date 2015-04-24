@@ -1,0 +1,66 @@
+From daae17fc9a96133483147af64fc67365bd42a22f Mon Sep 17 00:00:00 2001
+From: Athenas Jimenez <athenas.jimenez.gonzalez@intel.com>
+Date: Wed, 12 Aug 2015 16:03:04 +0000
+Subject: [PATCH] Add helpers
+
+Signed-off-by: Athenas Jimenez <athenas.jimenez.gonzalez@intel.com>
+---
+ lib/benchmark/helpers.rb | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+ create mode 100644 lib/benchmark/helpers.rb
+
+diff --git a/lib/benchmark/helpers.rb b/lib/benchmark/helpers.rb
+new file mode 100644
+index 0000000..de78e9c
+--- /dev/null
++++ b/lib/benchmark/helpers.rb
+@@ -0,0 +1,46 @@
++module Benchmark
++  module Helpers
++
++    def fixnum_max
++      if Object.const_defined?(:RUBY_ENGINE)
++        case RUBY_ENGINE
++        when "ruby"
++          2 ** (wordsize - 2) - 1
++        when "rbx"
++          Fixnum::MAX
++        when "jruby"
++          9223372036854775807
++        else
++          raise "Maximum Fixnum size now known yet for #{RUBY_ENGINE}"
++        end
++      else
++        2 ** (wordsize - 2) - 1
++      end
++    end
++    module_function :fixnum_max
++
++    def fixnum_min
++      if Object.const_defined?(:RUBY_ENGINE)
++        case RUBY_ENGINE
++        when "ruby"
++          - 2 ** (wordsize - 2)
++        when "rbx"
++          Fixnum::MIN
++        when "jruby"
++          -9223372036854775808
++        else
++          raise "Minimum Fixnum size now known yet for #{RUBY_ENGINE}"
++        end
++      else
++        - 2 ** (wordsize - 2)
++      end
++    end
++    module_function :fixnum_min
++
++    def wordsize
++      8 * 1.size
++    end
++    module_function :wordsize
++
++  end
++end
+-- 
+2.4.2
+
