@@ -1,0 +1,4 @@
+# File auto-generated with 'Watchfile generator'
+# 2016-05-06 18:22:16.298182
+# {'development', '>=0'}
+watchurl=https://rubygems.org/gems/benchmark_suite/versions/([0-9]+(?:\.[0-9]+)*)
